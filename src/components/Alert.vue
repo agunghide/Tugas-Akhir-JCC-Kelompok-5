@@ -4,13 +4,13 @@
     :color="color"
     bottom
     multi-line
-    outlined
+    rounded="true"
     timeout="3000"
   >
     {{ text }}
 
     <template v-slot:action="{ attrs }">
-      <v-btn color="red" text v-bind="attrs" @click="close"> Close </v-btn>
+      <v-btn color="white" text v-bind="attrs" @click="close"> X </v-btn>
     </template>
   </v-snackbar>
 </template>

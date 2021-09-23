@@ -29,7 +29,7 @@
         </v-list-item>
 
         <div class="pa-2" v-if="guest">
-          <v-btn block color="secondary" class="mb-1" @click="login">
+          <v-btn block color="secondary" class="mb-1" @click="goPage('/login')">
             <v-icon left>mdi-lock</v-icon>
             Login
           </v-btn>
@@ -66,7 +66,7 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar app absolute elevation="0" color="transparent" class="pt-3" v-show="appBar">
+    <v-app-bar app absolute elevation="0" color="transparent" class="pt-3" v-if="appBar">
         <div class="d-flex container">
             <v-col
               cols="6"
@@ -141,17 +141,6 @@
                 </v-list>
               </v-menu>
             </div>
-
-              <!-- <v-btn 
-                v-if="guest"
-                color="secondary" 
-                class="float-right d-none d-md-inline-block"
-                outlined
-                rounded 
-                @click="login"
-              >
-                Login
-              </v-btn> -->
               <v-btn 
                 v-if="guest"
                 color="secondary" 
@@ -172,14 +161,14 @@
 
     <!-- Sizes your content based upon application components -->
     <v-main :class="(route == '/login' || route == '/register') ? 'pa-0' : 'mb-10'">
-      <v-container fluid>
+      <v-container fluid :class="(route == '/login' || route == '/register') ? 'fill-height pa-0' : 'fill-height'" >
         <v-slide-y-transition>
           <router-view></router-view>
         </v-slide-y-transition>
       </v-container>
     </v-main>
 
-    <v-footer app absolute color="transparent" class="subtitle-2 d-block text-center font-weight-light">
+    <v-footer app absolute color="transparent" v-if="footerStatus" class="subtitle-2 d-block text-center font-weight-light">
       Created © 2021 Team 5 VueJS Jabar Coding Camp
       <br>
       All rights reserved
@@ -200,6 +189,7 @@ export default {
   data: () => ({
     drawer: false,
     appBar:true,
+    footerStatus:true,
     menus: [
       { title: "Home", icon:"mdi-home", route: "/" },
       { title: "Blogs", icon:"mdi-note", route: "/blogs" },
@@ -262,26 +252,30 @@ export default {
     }),
 
     goPage(url){
-      // this.$vuetify.theme.dark = false;
       this.$router.push(url)
+    },
+
+    cekRoute(){
+      this.route = this.$route.path;
+      if(this.route == "/login" || this.route == "/register"){
+        this.$vuetify.theme.dark = false;
+        this.appBar = false
+        this.footerStatus = false
+      }else{
+        this.$vuetify.theme.dark = true;
+        this.appBar = true
+        this.footerStatus = true
+      }
     }
   },
   mounted() {
+    this.cekRoute()
     if (this.token) {
       this.checkToken(this.token);
     }
-
-    
   },
   updated(){
-    this.route = this.$route.path;
-    if(this.route == "/login" || this.route == "/register"){
-      this.$vuetify.theme.dark = false;
-      this.appBar = false
-    }else{
-      this.$vuetify.theme.dark = true;
-      this.appBar = true
-    }
+    this.cekRoute()
   }
 };
 </script>

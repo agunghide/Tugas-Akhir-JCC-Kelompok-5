@@ -1,109 +1,153 @@
 <template>
-  <v-row>
+  <v-row class="fill-height">
     <v-col
+      cols="12"
       md="6"
       align-self="center"
     >
-      <v-container class="px-16">
-        <div class="mb-10 pointer d-inline-block" @click="$router.back()">
-              <v-icon color="secondary">mdi-chevron-left</v-icon> 
-              <span class="secondary--text text-decoration-underline">BACK TO HOME</span>
-        </div>
-        <div class="text-center">
-          <h1 class="h3 font-weight-medium">
-            Login
-          </h1> 
-          <h3 class="h5 font-weight-regular">
-            Hello there! Welcome Back
-          </h3>
-
-          <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-          >
-            <div class="py-2 px-10 mt-10">
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
-                required
-              ></v-text-field>
+          <v-container class="px-md-16 px-10">
+            <div class="mb-10 ml-n3 ml-md-8" >
+              <router-link class="d-inline-block pointer subtitle-2 font-weight-regular text-decoration-none" to="/">
+                    <v-icon color="secondary">mdi-chevron-left</v-icon> 
+                    <span class="secondary--text text-decoration-underline">BACK TO HOME</span>
+              </router-link>
             </div>
-            <div class="py-2 px-10 mb-5">
-              <v-text-field
-                v-model="password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, rules.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Normal with hint text"
-                hint="At least 8 characters"
-                counter
-                @click:append="show1 = !show1"
-              ></v-text-field>
-            </div>
-            <div class="py-2 px-10 mb-5">
-              <v-btn
-                :disabled="!valid"
-                color="secondary"
-                rounded
-                class="mr-4 py-4"
-                block
-                @click="validate"
-              >
+            <div class="text-center">
+              <h1 class="h3 font-weight-medium">
                 Login
-              </v-btn>
+              </h1> 
+              <h3 class="h5 font-weight-regular">
+                Hello there! Welcome Back
+              </h3>
+
+              <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+              >
+                <div class="py-2 px-sm-4 px-md-10 mt-10">
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                    color="secondary"
+                  ></v-text-field>
+                </div>
+                <div class="py-2 px-sm-4 px-md-10 mb-5">
+                  <v-text-field
+                    v-model="password"
+                    :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="[rules.required, rules.min]"
+                    :type="passwordShow ? 'text' : 'password'"
+                    name="input-10-1"
+                    label="Password"
+                    hint="At least 8 characters"
+                    counter
+                    color="secondary"
+                    @click:append="passwordShow = !passwordShow"
+                  ></v-text-field>
+                </div>
+                <div class="py-2 px-sm-4 px-md-10 mb-5">
+                  <v-btn
+                    :disabled="!valid"
+                    color="secondary"
+                    rounded
+                    class="mr-4 py-6"
+                    block
+                    @click="login"
+                  >
+                    Login
+                  </v-btn>
+                </div>
+                <div class="py-2 px-sm-4 px-md-10 secondary--text">
+                  I don't have an account? Register first
+                </div>
+              </v-form>
             </div>
-            <div class="py-2 px-10 secondary--text">
-              I don't have an account? Register first
-            </div>
-          </v-form>
-        </div>
-      </v-container>
+          </v-container> 
     </v-col>
+    
     <v-col
+      cols="12"
       md="6"
+      class="accent d-none d-md-block"
     >
-      Foto
+      <v-row class="fill-height">
+        <v-col md="12" align-self="center">
+            <v-img 
+                src="https://svgshare.com/i/aTr.svg" 
+                width="100%">
+            </v-img>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
 
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data: () => ({
       valid: true,
-      name: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ],
       email: '',
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
-      show1: false,
-      password: 'Password',
+      passwordShow: false,
+      password: '',
+      match:false,
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => (`The email and password you entered don't match`),
       },
-    }),
+      apiDomain: "https://demo-api-vue.sanbercloud.com",
+  }),
+  methods: {
+      ...mapActions({
+          setAlert: "alert/set",
+          setToken: "auth/setToken",
+      }),
 
-    methods: {
-      validate () {
-        this.$refs.form.validate()
+      redirect() {
+        this.$router.push("/")
       },
-      reset () {
-        this.$refs.form.reset()
+
+      login () {
+        const config = {
+            method: "post",
+            url: `${this.apiDomain}/api/v2/auth/login`,
+            data: {
+              email: this.email,
+              password: this.password,
+            },
+        };
+
+        this.axios(config)
+            .then((response) => {
+                this.setToken(response.data.access_token);
+
+                this.setAlert({
+                  status: true,
+                  color: "success",
+                  text: "Login Berhasil",
+                });
+
+                this.redirect();
+            })
+            .catch((error) => {
+                console.log(error);
+
+                this.setAlert({
+                  status: true,
+                  color: "error",
+                  text: "Login Gagal",
+                });
+            });
+        },
       },
-      resetValidation () {
-        this.$refs.form.resetValidation()
-      },
-    },
   }
 </script>
