@@ -1,11 +1,45 @@
 <template>
   <!-- templates blogs -->
-  <v-container class="ma-0 pa-0" grid-list-sm>
-    <div class="text-right">
-      <v-btn small text to="/blogs" class="blue--text">
-        All Blogs <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
-    </div>
+  <v-container grid-list-sm class="mt-10">
+    <v-row no-gutters class="mb-10">
+      <v-col
+        xs="12"
+        md="6"
+      >
+        <h1 class="text-lg-h1 text-md-h2 text-sm-h3 text-xs-h4 font-weight-medium">
+          Publish your experience with us
+        </h1>
+        <br>
+        <h2 class="subtitle-1 font-weight-light">
+          Share any experience with us or share something useful with us so that readers get positive insights
+        </h2>
+        <br>
+        <v-btn 
+          color="secondary" 
+          rounded 
+          class="px-8 py-7"
+        >
+          Register for Free
+        </v-btn>
+      </v-col>
+      <v-col
+        xs="12"
+        md="6"
+        class="mt-10 mt-md-none mt-xs-12" 
+      >
+        <v-img 
+          src="https://svgshare.com/i/aTr.svg" 
+          height="100%">
+        </v-img>
+      </v-col>
+    </v-row>
+    
+    <v-subheader class="text-left pa-4 pb-2 white--text title">
+      Random Blog
+    </v-subheader>
+
+    <v-divider class="mx-4"></v-divider>
+    
     <v-layout wrap>
       <blog-item-component
         v-for="blog in blogs"
@@ -14,6 +48,18 @@
       >
       </blog-item-component>
     </v-layout>
+
+    <div class="text-center mt-8">
+      <v-btn 
+        outlined 
+        rounded 
+        color="secondary" 
+        to="/blogs" 
+        class="px-14 py-5"
+      >
+        See All Blogs
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -32,7 +78,7 @@ export default {
     go() {
       const config = {
         method: "get",
-        url: `${this.apiDomain}/api/v2/blog/random/4`,
+        url: `${this.apiDomain}/api/v2/blog/random/6`,
       };
       this.axios(config)
         .then((response) => {

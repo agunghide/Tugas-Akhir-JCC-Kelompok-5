@@ -1,36 +1,50 @@
 <template>
   <!-- templates blogs -->
-  <div>
-    <v-card v-if="blog.id">
+  <v-container class="mt-8">
+    <div class="mb-2 pointer d-inline-block" @click="$router.back()">
+          <v-icon color="secondary">mdi-chevron-left</v-icon> 
+          <span class="secondary--text text-decoration-underline">Back</span>
+    </div>
+    <div v-if="blog.id">
       <v-img
         :src="
           blog.photo ? apiDomain + blog.photo : 'https://picsum.photos/200/300'
         "
         class="white--text"
-        height="200px"
+        height="450"
       >
-        <v-card-title class="fill-height align-end" v-text="blog.title">
-        </v-card-title>
       </v-img>
 
-      <v-card-text>
-        <v-simple-table dense>
-          <tbody>
-            <tr>
-              <td><v-icon>mdi-format-title</v-icon> Judul</td>
-              <td class="blue--text">{{ blog.title }}</td>
-            </tr>
-            <tr>
-              <td><v-icon>mdi-note</v-icon> Deskripsi</td>
-              <td>
-                {{ blog.description }}
-              </td>
-            </tr>
-          </tbody>
-        </v-simple-table>
-      </v-card-text>
-    </v-card>
-  </div>
+      <div class="py-3">
+        <h2 class="text-center display-2 font-weight-medium py-3 text-capitalize">{{ blog.title }}</h2>
+
+        <h3 class="py-4">Description</h3>
+        <p>
+          {{ blog.description }}
+        </p>
+      </div>
+      <div class="d-flex flex-row">
+        <div>
+          <v-btn rounded color="secondary">
+            <v-icon size="18" class="pr-2">mdi-pencil-box-outline</v-icon>  
+            Update
+          </v-btn>
+        </div>
+        <div class="px-5">
+          <v-btn rounded color="secondary">
+            <v-icon size="18" class="pr-2">mdi-tray-arrow-up</v-icon>  
+            Upload File
+          </v-btn>
+        </div>
+        <div>
+          <v-btn rounded color="accent">
+            <v-icon size="18" class="pr-2">mdi-trash-can-outline</v-icon>  
+            Delete
+          </v-btn>
+        </div>
+      </div>
+    </div>
+  </v-container>
 </template>
 
 <script>

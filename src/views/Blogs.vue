@@ -1,7 +1,11 @@
 <template>
   <!-- templates blogs -->
-  <v-container class="ma-0 pa-0" grid-list-sm>
-    <v-subheader> All Blogs </v-subheader>
+  <v-container grid-list-sm class="mt-5">
+    <v-subheader class="text-left pa-4 pb-2 white--text title">
+      All Blogs
+    </v-subheader>
+
+    <v-divider class="mx-4"></v-divider>
     <v-layout wrap>
       <blog-item-component
         v-for="blog in blogs"
@@ -15,6 +19,9 @@
       @input="go"
       :length="lengthPage"
       :total-visible="perPage"
+      color="secondary"
+      circle
+      class="elevation-0"
     >
     </v-pagination>
   </v-container>

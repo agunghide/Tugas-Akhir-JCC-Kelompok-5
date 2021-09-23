@@ -1,0 +1,28 @@
+.v-avatar.outlined--secondary {
+  border: 1px solid;
+  border-color: var(--v-secondary-base);
+}
+
+.v-avatar.outlined--secondary img,
+.v-avatar.outlined--secondary .v-icon {
+  padding: 2px;
+}
+
+.theme--dark.v-pagination .v-pagination__item,
+.theme--dark.v-pagination .v-pagination__navigation {
+  background: transparent !important;
+}
+
+.theme--dark.v-pagination .v-pagination__item--active {
+  background-color: var(--v-secondary-base) !important;
+  border-color: var(--v-secondary-base) !important;
+}
+
+.elevation-0 ul li .v-pagination__item,
+.elevation-0 ul li .v-pagination__navigation {
+  box-shadow: none !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
