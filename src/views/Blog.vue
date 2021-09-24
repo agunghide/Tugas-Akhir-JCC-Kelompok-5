@@ -25,19 +25,19 @@
       </div>
       <div class="d-flex flex-row">
         <div>
-          <v-btn rounded color="secondary">
+          <v-btn :disabled="guest" @click="openForm()" rounded color="secondary">
             <v-icon size="18" class="pr-2">mdi-pencil-box-outline</v-icon>  
             Update
           </v-btn>
         </div>
         <div class="px-5">
-          <v-btn rounded color="secondary">
+          <v-btn :disabled="guest" rounded color="secondary">
             <v-icon size="18" class="pr-2">mdi-tray-arrow-up</v-icon>  
             Upload File
           </v-btn>
         </div>
         <div>
-          <v-btn rounded color="accent">
+          <v-btn :disabled="guest" rounded color="accent">
             <v-icon size="18" class="pr-2">mdi-trash-can-outline</v-icon>  
             Delete
           </v-btn>
@@ -48,11 +48,17 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     blog: {},
     apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
+  computed: {
+    ...mapGetters({
+      guest: "auth/guest",
+    }),
+  },
   methods: {
     go() {
       let { id } = this.$route.params;
@@ -69,6 +75,20 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    ...mapActions({
+      setDialogComponent: "dialog/setComponent",
+    }),
+    openForm() {
+      this.setDialogComponent({
+        component: "Form",
+        params:{
+          titleDialog: "Edit Blog",
+          descriptionDialog:"edit the blog you wrote here",
+          typeForm: "update",
+          blog : this.blog
+        }
+      });
     },
   },
   created() {

@@ -56,6 +56,15 @@
       >
         Simpan
       </v-btn>
+      <v-btn
+        v-else-if="params.typeForm == 'update'"
+        color="secondary"
+        rounded
+        @click="update()"
+        class="px-10 py-6"
+      >
+        Update
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -89,7 +98,6 @@ export default {
     close() {
       this.$emit("closed", false);
     },
-
     submit(){
       const config = {
           method: "post", 
@@ -130,8 +138,51 @@ export default {
           })
 
     },
+    editBlog(){
+      this.title = this.params.blog.title
+      this.description = this.params.blog.description
+    },
+    update(){
+      const id = this.params.blog.id
+      const config = {
+          method: "post", 
+          url: `${this.apiDomain}/api/v2/blog/${id}`,
+          params: { _method: 'PUT' },
+          headers: {
+            'Accept' : 'application/json',
+            'Authorization' : `Bearer ${this.token}`
+          },
+          data: {
+            title : this.title,
+            description : this.description
+          },
+          
+      };
 
-    
+      this.axios(config)
+          .then(() => {
+              this.clearForm()
+              this.close()
+
+              this.setAlert({
+                status: true,
+                color: "success",
+                text: "Data Berhasil Diupdate",
+              });
+
+              this.$router.go(0)
+          })
+          .catch((error)=> {
+              console.log(error)
+
+              this.setAlert({
+                status: true,
+                color: "error",
+                text: "Data Gagal Diupdate",
+              });
+          })
+
+    },
     goPage(url){
       this.$router.push(url)
     },
@@ -139,6 +190,9 @@ export default {
   mounted() {
     if (this.token) {
       this.checkToken(this.token);
+    }
+    if (this.params.typeForm == "update") {
+      this.editBlog()
     }
   },
 }
