@@ -18,6 +18,7 @@
           color="secondary" 
           rounded 
           class="px-8 py-7"
+          @click="goPage('/register')"
         >
           Register for Free
         </v-btn>
@@ -88,6 +89,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    goPage(url){
+      this.$router.push(url)
     },
   },
   created() {

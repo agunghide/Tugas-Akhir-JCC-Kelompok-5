@@ -14,13 +14,10 @@
             </div>
             <div class="text-center">
               <h1 class="h3 font-weight-medium">
-                Login
+                Register
               </h1> 
-              <h3 class="h5 font-weight-regular" v-if="!newRegistered">
-                Hello there! Welcome Back
-              </h3>
-              <h3 class="h5 font-weight-regular" v-else>
-                Please login your new account!
+              <h3 class="h5 font-weight-regular">
+                Share any experience with us or share something useful with us so that readers get positive insights
               </h3>
 
               <v-form
@@ -28,22 +25,30 @@
                 v-model="valid"
                 lazy-validation
               >
-                <div class="py-2 px-sm-4 px-md-10 mt-10">
+              <div class="py-2 px-sm-4 px-md-10 mt-10">
                   <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
+                    v-model="fullName"
+                    :rules="[rules.required]"
+                    label="Full Name"
                     required
                     color="secondary"
                   ></v-text-field>
                 </div>
-                <div class="py-2 px-sm-4 px-md-10 mb-5">
+                <div class="py-2 px-sm-4 px-md-10">
+                  <v-text-field
+                    v-model="email"
+                    :rules="[emailRules,rules.required]"
+                    label="E-mail Address"
+                    required
+                    color="secondary"
+                  ></v-text-field>
+                </div>
+                <div class="py-2 px-sm-4 px-md-10">
                   <v-text-field
                     v-model="password"
                     :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
                     :rules="[rules.required, rules.min]"
                     :type="passwordShow ? 'text' : 'password'"
-                    name="input-10-1"
                     label="Password"
                     hint="At least 8 characters"
                     counter
@@ -52,21 +57,32 @@
                   ></v-text-field>
                 </div>
                 <div class="py-2 px-sm-4 px-md-10 mb-5">
+                    <v-file-input
+                      v-model="photo_profile"
+                      show-size
+                      counter
+                      multiple
+                      label="Photo Profile"
+                      color="secondary"
+                    :rules="[rules.required]"
+                    ></v-file-input>
+                </div>
+                <div class="py-2 px-sm-4 px-md-10 mb-5">
                   <v-btn
                     :disabled="!valid"
                     color="secondary"
                     rounded
                     class="mr-4 py-6"
                     block
-                    @click="login"
+                    @click="register"
                   >
-                    Login
+                    Register
                   </v-btn>
                 </div>
                 <div class="py-2 px-sm-4 px-md-10 secondary--text">
-                  I don't have an account? 
-                  <router-link class="text-decoration-underline secondary--text" to="/register">
-                      Register first
+                  Already have an account? 
+                  <router-link class="text-decoration-underline secondary--text" to="/login">
+                      Check this for Login
                   </router-link>
                 </div>
               </v-form>
@@ -82,7 +98,7 @@
       <v-row class="fill-height">
         <v-col md="12" align-self="center">
             <v-img 
-                src="https://svgshare.com/i/aTr.svg" 
+                src="https://svgshare.com/i/aVo.svg" 
                 width="100%">
             </v-img>
         </v-col>
@@ -97,8 +113,9 @@ import { mapActions } from 'vuex'
 
 export default {
     data: () => ({
-      newRegistered: false,
       valid: true,
+      photo_profile: null,
+      fullName: '',
       email: '',
       emailRules: [
         v => !!v || 'E-mail is required',
@@ -120,29 +137,39 @@ export default {
       }),
 
       redirect() {
-        this.$router.push("/")
+        this.$router.push(
+            {
+              name : "Login",
+              params:{
+                newRegistered: true
+              }
+            }
+        )
       },
 
-      login () {
+      register () {
+        let formData = new FormData()
+        formData.append('name', this.fullName)
+        formData.append('email', this.email)
+        formData.append('password', this.password)
+        formData.append('photo_profile', this.photo_profile[0])
+
         const config = {
-            method: "post", 
-            url: `${this.apiDomain}/api/v2/auth/login`,
-            data: {
-              email: this.email,
-              password: this.password,
+            method: "post",
+            url: `${this.apiDomain}/api/v2/auth/register`,
+            headers:{
+              'Accept' : 'application/json'
             },
+            data: formData,
         };
 
         this.axios(config)
-            .then((response) => {
-                this.setToken(response.data.access_token);
-
+            .then(() => {
                 this.setAlert({
                   status: true,
                   color: "success",
-                  text: "Login Berhasil",
+                  text: "Register Berhasil",
                 });
-
                 this.redirect();
             })
             .catch((error) => {
@@ -151,13 +178,10 @@ export default {
                 this.setAlert({
                   status: true,
                   color: "error",
-                  text: "Login Gagal",
+                  text: "Register Gagal",
                 });
             });
-        },
       },
-      mounted(){
-        this.newRegistered = this.$route.params.newRegistered
-      }
-  }
+  },
+}
 </script>
