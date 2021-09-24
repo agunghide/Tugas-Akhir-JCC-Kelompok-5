@@ -4,6 +4,7 @@ export default {
         status: false,
         component: '',
         params: {},
+        endForm: false 
     },
     mutations: {
         setStatus: (state, status) => {
@@ -12,6 +13,9 @@ export default {
         setComponent: (state, {component, params}) => {
             state.component = component
             state.params = params
+        },
+        setEndForm: (state, endForm) => {
+            state.endForm = endForm
         },
     },
     actions: {
@@ -22,10 +26,14 @@ export default {
             commit('setComponent', {component, params})
             commit('setStatus', true)
         },
+        setEndForm: ({commit}, endForm) => {
+            commit('setEndForm', endForm)
+        },
     },
     getters: {
         status: state => state.status,
         component: state => state.component,
         params: state => state.params,
+        endForm: state => state.endForm,
     },
 }

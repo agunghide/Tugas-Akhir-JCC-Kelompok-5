@@ -82,15 +82,18 @@ export default {
     ...mapGetters({
       token: "auth/token",
       params: "dialog/params",
+      endForm: "dialog/endForm",
     }),
   },
   methods:{
     ...mapActions({
       checkToken: "auth/checkToken",
       setAlert: "alert/set",
+      setEndForm: "dialog/setEndForm",
     }),
 
     clearForm(){
+      this.setEndForm(true)
       this.title = ''
       this.description = ''
     },
@@ -170,7 +173,7 @@ export default {
                 text: "Data Berhasil Diupdate",
               });
 
-              this.$router.go(0)
+              // this.$router.go(0)
           })
           .catch((error)=> {
               console.log(error)

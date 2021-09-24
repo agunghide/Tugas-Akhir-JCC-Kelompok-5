@@ -57,6 +57,7 @@ export default {
   computed: {
     ...mapGetters({
       guest: "auth/guest",
+      endForm: "dialog/endForm",
     }),
   },
   methods: {
@@ -70,7 +71,6 @@ export default {
         .then((response) => {
           let { blog } = response.data;
           this.blog = blog;
-          console.log(this.blog);
         })
         .catch((error) => {
           console.log(error);
@@ -78,6 +78,7 @@ export default {
     },
     ...mapActions({
       setDialogComponent: "dialog/setComponent",
+      setEndForm: "dialog/setEndForm",
     }),
     openForm() {
       this.setDialogComponent({
@@ -94,5 +95,14 @@ export default {
   created() {
     this.go();
   },
+  watch:{
+    endForm(value){
+      this.go();
+
+      if(value){
+        this.setEndForm(false)
+      }
+    }
+  }
 };
 </script>
