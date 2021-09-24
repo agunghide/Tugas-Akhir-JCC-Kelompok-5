@@ -102,9 +102,20 @@
               class="py-0 d-block px-0"
             >
             
-            <div class="text-center d-none d-md-inline-block float-right" v-if="!guest">
-              <v-menu offset-y min-width="50px" nudge-right="75" nudge-bottom="13">
-                <template v-slot:activator="{ on, attrs }">
+            <div 
+              class="text-center d-none d-md-inline-block float-right" 
+              v-if="!guest"
+            >
+              <v-menu 
+                offset-y 
+                min-width="50px" 
+                nudge-right="68" 
+                nudge-bottom="1"
+                tile
+              >
+                <template 
+                  v-slot:activator="{ on, attrs }"
+                >
                   <v-btn
                     class="py-4 px-4"
                     color="primary"
@@ -113,7 +124,11 @@
                     v-bind="attrs"
                     v-on="on"
                   >
-                    <strong class="align-center mr-4 body-2">{{ (user.name.length > 22 ) ? `${user.name.substring(0, 22)}...` : user.name }}</strong>
+                    <strong 
+                      class="align-center mr-4 body-2"
+                    >
+                      {{ (user.name.length > 22 ) ? `${user.name.substring(0, 22)}...` : user.name }}
+                    </strong>
                     <v-avatar
                         size="30px"
                         class="outlined--secondary"
@@ -133,8 +148,10 @@
                     </v-avatar>
                   </v-btn>
                 </template>
-                <v-list class="py-0 dropdown-custom" color="#FF2650">
-                  <v-list-item selectable @click="logout">
+                <v-list class="py-0" color="transparent">
+                  <v-list-item class="dropdown-custom pa-0">
+                  </v-list-item>
+                  <v-list-item selectable @click="logout" class="accent rounded-lg px-6 min-height-custom">
                     <v-icon>mdi-exit-to-app</v-icon>
                     <v-list-item-title class="caption">Logout</v-list-item-title>
                   </v-list-item>

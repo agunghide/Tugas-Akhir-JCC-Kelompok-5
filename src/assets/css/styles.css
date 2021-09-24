@@ -31,27 +31,23 @@
   background-color: transparent !important;
 }
 
-.dropdown-custom::before {
-  content: "";
-  position: absolute;
-  right: 11px;
-  top: -10px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 10px 10px 10px;
-  border-color: transparent transparent var(--v-secondary-base) transparent;
-  z-index: 9999;
+.dropdown-custom {
+  background: transparent;
+  min-height: 10px !important;
 }
+
 .dropdown-custom::after {
-  content: "";
   position: absolute;
-  right: 4px;
-  top: -22px;
+  right: 16px;
+  top: 1px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 17px 17px 17px;
-  border-color: transparent transparent #ffffff transparent;
+  border-width: 0 7px 7px 7px;
+  border-color: transparent transparent var(--v-accent-base) transparent;
   z-index: 9998;
+}
+
+.min-height-custom {
+  min-height: 38px !important;
 }
