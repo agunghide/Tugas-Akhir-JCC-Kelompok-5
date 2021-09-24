@@ -124,48 +124,52 @@ export default {
       },
 
       login () {
-        this.loadingButton = true
+        const validation = this.$refs.form.validate()
 
-        const config = {
-            method: "post", 
-            url: `${this.apiDomain}/api/v2/auth/login`,
-            data: {
-              email: this.email,
-              password: this.password,
-            },
-        };
+        if(validation){
+          this.loadingButton = true
 
-        this.axios(config)
-            .then((response) => {
-                this.loadingButton = false
+          const config = {
+              method: "post", 
+              url: `${this.apiDomain}/api/v2/auth/login`,
+              data: {
+                email: this.email,
+                password: this.password,
+              },
+          };
 
-                this.setToken(response.data.access_token);
+          this.axios(config)
+              .then((response) => {
+                  this.loadingButton = false
 
-                this.setAlert({
-                  status: true,
-                  color: "success",
-                  text: "Login Berhasil",
-                });
+                  this.setToken(response.data.access_token);
 
-                this.redirect();
-            })
-            .catch((error) => {
-                this.loadingButton = false
-                
-                console.log(error);
+                  this.setAlert({
+                    status: true,
+                    color: "success",
+                    text: "Login Berhasil",
+                  });
 
-                this.setAlert({
-                  status: true,
-                  color: "error",
-                  text: "Login Gagal",
-                });
-            });
-        },
-      },
-      mounted(){
-        if(this.$route.params.length > 0){
-          this.newRegistered = this.$route.params.newRegistered
+                  this.redirect();
+              })
+              .catch((error) => {
+                  this.loadingButton = false
+
+                  console.log(error);
+
+                  this.setAlert({
+                    status: true,
+                    color: "error",
+                    text: "Login Gagal",
+                  });
+              });
         }
+      },
+    },
+    mounted(){
+      if(this.$route.params.newRegistered > 0){
+        this.newRegistered = this.$route.params.newRegistered
       }
+    }
   }
 </script>

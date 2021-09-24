@@ -64,7 +64,7 @@
                       multiple
                       label="Photo Profile"
                       color="secondary"
-                    :rules="[rules.required]"
+                      :rules="[rules.required]"
                     ></v-file-input>
                 </div>
                 <div class="py-2 px-sm-4 px-md-10 mb-5">
@@ -150,46 +150,51 @@ export default {
       },
 
       register () {
-        this.loadingButton = true
+        const validation = this.$refs.form.validate()
 
-        let formData = new FormData()
-        formData.append('name', this.fullName)
-        formData.append('email', this.email)
-        formData.append('password', this.password)
-        formData.append('photo_profile', this.photo_profile[0])
-
-        const config = {
-            method: "post",
-            url: `${this.apiDomain}/api/v2/auth/register`,
-            headers:{
-              'Accept' : 'application/json'
-            },
-            data: formData,
-        };
-
-        this.axios(config)
-            .then(() => {
+        if(validation){
+          this.loadingButton = true
+  
+          let formData = new FormData()
+          formData.append('name', this.fullName)
+          formData.append('email', this.email)
+          formData.append('password', this.password)
+          formData.append('photo_profile', this.photo_profile[0])
+  
+          const config = {
+              method: "post",
+              url: `${this.apiDomain}/api/v2/auth/register`,
+              headers:{
+                'Accept' : 'application/json'
+              },
+              data: formData,
+          };
+  
+          this.axios(config)
+              .then(() => {
+                  this.loadingButton = false
+                  
+                  this.setAlert({
+                    status: true,
+                    color: "success",
+                    text: "Register Berhasil",
+                  });
+                  
+                  this.redirect();
+              })
+              .catch((error) => {
                 this.loadingButton = false
-                
-                this.setAlert({
-                  status: true,
-                  color: "success",
-                  text: "Register Berhasil",
-                });
-                
-                this.redirect();
-            })
-            .catch((error) => {
-              this.loadingButton = false
+  
+                  console.log(error);
+  
+                  this.setAlert({
+                    status: true,
+                    color: "error",
+                    text: "Register Gagal",
+                  });
+              });
+        }
 
-                console.log(error);
-
-                this.setAlert({
-                  status: true,
-                  color: "error",
-                  text: "Register Gagal",
-                });
-            });
       },
   },
 }
