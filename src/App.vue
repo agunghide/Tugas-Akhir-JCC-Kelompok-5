@@ -103,7 +103,7 @@
             >
             
             <div class="text-center d-none d-md-inline-block float-right" v-if="!guest">
-              <v-menu offset-y>
+              <v-menu offset-y min-width="50px" nudge-right="75" nudge-bottom="13">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     class="py-4 px-4"
@@ -133,7 +133,7 @@
                     </v-avatar>
                   </v-btn>
                 </template>
-                <v-list class="py-0" color="#FF2650">
+                <v-list class="py-0 dropdown-custom" color="#FF2650">
                   <v-list-item selectable @click="logout">
                     <v-icon>mdi-exit-to-app</v-icon>
                     <v-list-item-title class="caption">Logout</v-list-item-title>
@@ -263,6 +263,7 @@ export default {
   },
   mounted() {
     this.cekRoute()
+    console.log("test")
     if (this.token) {
       this.checkToken(this.token);
     }

@@ -30,3 +30,28 @@
 .no-background-hover::before {
   background-color: transparent !important;
 }
+
+.dropdown-custom::before {
+  content: "";
+  position: absolute;
+  right: 11px;
+  top: -10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent var(--v-secondary-base) transparent;
+  z-index: 9999;
+}
+.dropdown-custom::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  top: -22px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 17px 17px 17px;
+  border-color: transparent transparent #ffffff transparent;
+  z-index: 9998;
+}
