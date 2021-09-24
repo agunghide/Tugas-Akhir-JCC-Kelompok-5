@@ -12,6 +12,7 @@
           color="secondary" 
           rounded 
           @click="openForm()"
+          :disabled="guest"
         >
           Publish something
         </v-btn>
