@@ -58,6 +58,7 @@
                     class="mr-4 py-6"
                     block
                     @click="login"
+                    :loading="loadingButton"
                   >
                     Login
                   </v-btn>
@@ -96,6 +97,7 @@ import { mapActions } from 'vuex'
 
 export default {
     data: () => ({
+      loadingButton: false,
       newRegistered: false,
       valid: true,
       email: '',
@@ -122,6 +124,8 @@ export default {
       },
 
       login () {
+        this.loadingButton = true
+
         const config = {
             method: "post", 
             url: `${this.apiDomain}/api/v2/auth/login`,
@@ -133,6 +137,8 @@ export default {
 
         this.axios(config)
             .then((response) => {
+                this.loadingButton = false
+
                 this.setToken(response.data.access_token);
 
                 this.setAlert({
@@ -144,6 +150,8 @@ export default {
                 this.redirect();
             })
             .catch((error) => {
+                this.loadingButton = false
+                
                 console.log(error);
 
                 this.setAlert({

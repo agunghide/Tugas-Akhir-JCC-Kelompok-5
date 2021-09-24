@@ -53,6 +53,7 @@
         rounded
         @click="submit()"
         class="px-10 py-6"
+        :loading="loadingButton"
       >
         Simpan
       </v-btn>
@@ -62,6 +63,7 @@
         rounded
         @click="update()"
         class="px-10 py-6"
+        :loading="loadingButton"
       >
         Update
       </v-btn>
@@ -77,6 +79,7 @@ export default {
     apiDomain: "https://demo-api-vue.sanbercloud.com",
     title: "",
     description: "",
+    loadingButton: false
   }),
   computed: {
     ...mapGetters({
@@ -102,6 +105,8 @@ export default {
       this.$emit("closed", false);
     },
     submit(){
+      this.loadingButton = true
+
       const config = {
           method: "post", 
           url: `${this.apiDomain}/api/v2/blog`,
@@ -118,6 +123,7 @@ export default {
       this.axios(config)
           .then((response) => {
               let id = response.data.blog.id
+              this.loadingButton = false
 
               this.clearForm()
               this.close()
@@ -131,6 +137,7 @@ export default {
               this.goPage(`/blog/${id}`)
           })
           .catch((error)=> {
+              this.loadingButton = false
               console.log(error)
 
               this.setAlert({
@@ -147,6 +154,8 @@ export default {
     },
     update(){
       const id = this.params.blog.id
+      this.loadingButton = true
+
       const config = {
           method: "post", 
           url: `${this.apiDomain}/api/v2/blog/${id}`,
@@ -164,6 +173,7 @@ export default {
 
       this.axios(config)
           .then(() => {
+              this.loadingButton = true
               this.clearForm()
               this.close()
 
@@ -176,6 +186,7 @@ export default {
               // this.$router.go(0)
           })
           .catch((error)=> {
+              this.loadingButton = true
               console.log(error)
 
               this.setAlert({

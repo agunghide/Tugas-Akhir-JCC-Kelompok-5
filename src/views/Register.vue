@@ -75,6 +75,7 @@
                     class="mr-4 py-6"
                     block
                     @click="register"
+                    :loading="loadingButton"
                   >
                     Register
                   </v-btn>
@@ -113,6 +114,7 @@ import { mapActions } from 'vuex'
 
 export default {
     data: () => ({
+      loadingButton: false,
       valid: true,
       photo_profile: null,
       fullName: '',
@@ -148,6 +150,8 @@ export default {
       },
 
       register () {
+        this.loadingButton = true
+
         let formData = new FormData()
         formData.append('name', this.fullName)
         formData.append('email', this.email)
@@ -165,14 +169,19 @@ export default {
 
         this.axios(config)
             .then(() => {
+                this.loadingButton = false
+                
                 this.setAlert({
                   status: true,
                   color: "success",
                   text: "Register Berhasil",
                 });
+                
                 this.redirect();
             })
             .catch((error) => {
+              this.loadingButton = false
+
                 console.log(error);
 
                 this.setAlert({
