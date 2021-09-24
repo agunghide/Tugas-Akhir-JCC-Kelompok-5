@@ -27,6 +27,6 @@
   cursor: pointer;
 }
 
-.h-100 {
-  height: 100vh;
+.no-background-hover::before {
+  background-color: transparent !important;
 }

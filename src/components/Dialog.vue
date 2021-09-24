@@ -1,15 +1,14 @@
 <template>
-  <keep-alive>
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      persistent
-      transition="dialog-bottom-transition"
-    >
-      <component :is="currentComponent" @closed="setDialogStatus"></component>
-    </v-dialog>
-  </keep-alive>
+  <v-row justify="center" v-if="dialog">
+    <keep-alive>
+      <v-dialog
+        v-model="dialog"
+        max-width="600px"
+      >
+        <component :is="currentComponent" @closed="setDialogStatus"></component>
+      </v-dialog>
+    </keep-alive>
+  </v-row>
 </template>
 
 
@@ -17,7 +16,7 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
-    Login: () => import("./Login.vue"),
+    Form: () => import("./Form.vue"),
   },
   computed: {
     ...mapGetters({

@@ -1,5 +1,5 @@
 <template>
-  <v-flex md4 xs6 5 class="px-1 py-2">
+  <v-flex sm6 xs12 5 :class="`px-1 py-2 md md${md}`">
     <v-card hover flat tile color="transparent" class="pa-3" :to="`/blog/${blog.id}`">
       <v-img
         :src="
@@ -32,6 +32,6 @@ export default {
   data: () => ({
     apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
-  props: ["blog"],
+  props: ["blog","md"],
 };
 </script>

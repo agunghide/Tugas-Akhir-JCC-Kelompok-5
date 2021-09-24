@@ -3,7 +3,7 @@ export default {
     state: {
         status: false,
         component: '',
-        params: {}
+        params: {},
     },
     mutations: {
         setStatus: (state, status) => {
@@ -12,7 +12,7 @@ export default {
         setComponent: (state, {component, params}) => {
             state.component = component
             state.params = params
-        }
+        },
     },
     actions: {
         setStatus: ({commit}, status) => {
@@ -21,11 +21,11 @@ export default {
         setComponent: ({commit}, {component, params}) => {
             commit('setComponent', {component, params})
             commit('setStatus', true)
-        }
+        },
     },
     getters: {
         status: state => state.status,
         component: state => state.component,
-        params: state => state.params
+        params: state => state.params,
     },
 }

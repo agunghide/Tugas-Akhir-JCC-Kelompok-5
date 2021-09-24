@@ -41,11 +41,10 @@
                   <v-text-field
                     v-model="password"
                     :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
+                    :rules="[rules.required]"
                     :type="passwordShow ? 'text' : 'password'"
                     name="input-10-1"
                     label="Password"
-                    hint="At least 8 characters"
                     counter
                     color="secondary"
                     @click:append="passwordShow = !passwordShow"
@@ -109,7 +108,6 @@ export default {
       match:false,
       rules: {
         required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
       },
       apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
@@ -157,7 +155,9 @@ export default {
         },
       },
       mounted(){
-        this.newRegistered = this.$route.params.newRegistered
+        if(this.$route.params.length > 0){
+          this.newRegistered = this.$route.params.newRegistered
+        }
       }
   }
 </script>

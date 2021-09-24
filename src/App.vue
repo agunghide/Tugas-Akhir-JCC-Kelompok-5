@@ -99,10 +99,10 @@
               cols="6"
               md="3"
               align-self="center"
-              class="py-0 d-block pl-0"
+              class="py-0 d-block px-0"
             >
             
-            <div class="text-center d-none d-md-inline-block" v-if="!guest">
+            <div class="text-center d-none d-md-inline-block float-right" v-if="!guest">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -237,15 +237,8 @@ export default {
         });
     },
 
-    login() {
-      this.setDialogComponent({
-        component: "login",
-      });
-    },
-
     ...mapActions({
       setAlert: "alert/set",
-      setDialogComponent: "dialog/setComponent",
       setToken: "auth/setToken",
       setUser: "auth/setUser",
       checkToken: "auth/checkToken",

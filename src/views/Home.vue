@@ -15,12 +15,22 @@
         </h2>
         <br>
         <v-btn 
+          v-if="guest"
           color="secondary" 
           rounded 
           class="px-8 py-7"
           @click="goPage('/register')"
         >
           Register for Free
+        </v-btn>
+        <v-btn 
+          v-else
+          color="secondary" 
+          rounded 
+          class="px-8 py-7"
+          @click="openForm()"
+        >
+          Publish something
         </v-btn>
       </v-col>
       <v-col
@@ -46,6 +56,7 @@
         v-for="blog in blogs"
         :key="`blog-${blog.id}`"
         :blog="blog"
+        md="4"
       >
       </blog-item-component>
     </v-layout>
@@ -66,6 +77,7 @@
 
 <script>
 import BlogItemComponent from "../components/BlogItemComponent.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -74,6 +86,11 @@ export default {
   }),
   components: {
     "blog-item-component": BlogItemComponent,
+  },
+  computed: {
+    ...mapGetters({
+      guest: "auth/guest",
+    }),
   },
   methods: {
     go() {
@@ -94,9 +111,25 @@ export default {
     goPage(url){
       this.$router.push(url)
     },
+
+    openForm() {
+      this.setDialogComponent({
+        component: "Form",
+        params:{
+          titleDialog: "Add Blog",
+          descriptionDialog:"Share any experience with us so that readers get positive insights",
+          typeForm: "tambah"
+        }
+      });
+    },
+    
+    ...mapActions({
+      setDialogComponent: "dialog/setComponent",
+    }),
   },
   created() {
     this.go();
+    console.log(this.guest);
   },
 };
 </script>

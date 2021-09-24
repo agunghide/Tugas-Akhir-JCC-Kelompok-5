@@ -1,9 +1,23 @@
 <template>
   <!-- templates blogs -->
   <v-container grid-list-sm class="mt-5">
-    <v-subheader class="text-left pa-4 pb-2 white--text title">
-      All Blogs
-    </v-subheader>
+    <div class="row mb-7 mb-sm-0">
+      <div class="col-12 col-sm-6 text-sm-left text-center">
+        <v-subheader class="pa-4 pb-2 white--text title d-inline-block">
+          All Blogs
+        </v-subheader>
+      </div>
+      <div class="col-12 col-sm-6 text-sm-right text-center pr-6 align-self-end">
+        <v-btn 
+          color="secondary" 
+          rounded 
+          @click="openForm()"
+        >
+          Publish something
+        </v-btn>
+      </div>
+      
+    </div>
 
     <v-divider class="mx-4"></v-divider>
     <v-layout wrap>
@@ -11,6 +25,7 @@
         v-for="blog in blogs"
         :key="`blog-${blog.id}`"
         :blog="blog"
+        md="6"
       >
       </blog-item-component>
     </v-layout>
@@ -29,6 +44,7 @@
 
 <script>
 import BlogItemComponent from "../components/BlogItemComponent.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -40,6 +56,11 @@ export default {
   }),
   components: {
     "blog-item-component": BlogItemComponent,
+  },
+  computed: {
+    ...mapGetters({
+      guest: "auth/guest",
+    }),
   },
   methods: {
     go() {
@@ -60,6 +81,22 @@ export default {
           console.log(error);
         });
     },
+
+    
+    openForm() {
+      this.setDialogComponent({
+        component: "Form",
+        params:{
+          titleDialog: "Add Blog",
+          descriptionDialog:"Share any experience with us so that readers get positive insights",
+          typeForm: "tambah"
+        }
+      });
+    },
+    
+    ...mapActions({
+      setDialogComponent: "dialog/setComponent",
+    }),
   },
   created() {
     this.go();
