@@ -111,7 +111,7 @@
 
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data: () => ({
@@ -133,6 +133,11 @@ export default {
       },
       apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
+  computed:{
+    ...mapGetters({
+      guest : 'auth/guest'
+    })
+  },
   methods: {
       ...mapActions({
           setAlert: "alert/set",
@@ -198,5 +203,10 @@ export default {
 
       },
   },
+  mounted(){
+    if(!this.guest){
+      this.$router.push('/')
+    }
+  }
 }
 </script>

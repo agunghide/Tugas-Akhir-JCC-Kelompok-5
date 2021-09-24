@@ -286,7 +286,6 @@ export default {
   },
   mounted() {
     this.cekRoute()
-    console.log("test")
     if (this.token) {
       this.checkToken(this.token);
     }
