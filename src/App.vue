@@ -10,7 +10,9 @@
     <v-navigation-drawer app right temporary v-model="drawer" :permanent="$vuetify.breakpoint.mdAndUp ? (drawer = false) : false">
       <v-list>
         <v-list-item v-if="!guest">
-          <v-list-item-avatar>
+          <v-list-item-avatar 
+              class="outlined--secondary" 
+            >
             <img
               v-if="user.photo_profile"
               :alt="user.name"
@@ -20,8 +22,12 @@
               v-else
               color="secondary" 
               size="20px"
-            ></v-icon>
+            >
+              mdi-account-outline
+            </v-icon>
+            
           </v-list-item-avatar>
+          
 
           <v-list-item-content>
             <v-list-item-title>{{ (user.name.length > 22 ) ? `${user.name.substring(0, 22)}...` : user.name }}</v-list-item-title>
@@ -33,7 +39,7 @@
             <v-icon left>mdi-lock</v-icon>
             Login
           </v-btn>
-          <v-btn block color="success">
+          <v-btn block color="accent">
             <v-icon left>mdi-account</v-icon>
             Register
           </v-btn>
@@ -58,7 +64,7 @@
 
       <template v-slot:append v-if="!guest">
         <div class="pa-2">
-          <v-btn block color="red" dark @click="logout">
+          <v-btn block color="accent" dark @click="logout">
             <v-icon>mdi-lock</v-icon>
             Logout
           </v-btn>
