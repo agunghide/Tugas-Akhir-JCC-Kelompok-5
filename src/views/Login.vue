@@ -27,6 +27,7 @@
                 ref="form"
                 v-model="valid"
                 lazy-validation
+                @submit.prevent="login"
               >
                 <div class="py-2 px-sm-4 px-md-10 mt-10">
                   <v-text-field
@@ -57,7 +58,7 @@
                     rounded
                     class="mr-4 py-6"
                     block
-                    @click="login"
+                    type="submit"
                     :loading="loadingButton"
                   >
                     Login
