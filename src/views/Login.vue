@@ -103,12 +103,12 @@ export default {
       email: '',
       emailRules: [
         v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid.',
       ],
       passwordShow: false,
       password: '',
       match:false,
-      passwordRules: [(v) => !!v || 'Password is required'],
+      passwordRules: [(v) => !!v || 'Password is required.'],
       apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
   computed: {

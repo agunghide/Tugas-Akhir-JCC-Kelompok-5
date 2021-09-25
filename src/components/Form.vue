@@ -30,13 +30,17 @@
       <v-divider></v-divider>
     </div>
     <v-card-text>
-      <v-form v-model="valid">
+      <v-form 
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
         <v-text-field
           v-model="title"
           label="Title Blog"
           color="secondary"
           light
-          required
+          :rules="titleRules"
           v-if="params.typeForm !== 'upload'"
         ></v-text-field>
         <v-textarea
@@ -46,7 +50,7 @@
           clear-icon="mdi-close-circle"
           label="Blog Description"
           light
-          required
+          :rules="descriptionRules"
           v-if="params.typeForm !== 'upload'"
         ></v-textarea>
         <v-file-input
@@ -55,6 +59,7 @@
           counter
           label="Upload Photo Blog"
           color="secondary"
+          :rules="[rules.required]"
           v-if="params.typeForm == 'upload'"
         ></v-file-input>
       </v-form>
@@ -62,6 +67,7 @@
     <v-card-actions>
       <v-btn
         v-if="params.typeForm == 'tambah'"
+        :disabled="!valid"
         color="secondary"
         rounded
         @click="submit()"
@@ -72,6 +78,7 @@
       </v-btn>
       <v-btn
         v-else-if="params.typeForm == 'update'"
+        :disabled="!valid"
         color="secondary"
         rounded
         @click="update()"
@@ -82,6 +89,7 @@
       </v-btn>
       <v-btn
         v-else-if="params.typeForm == 'upload'"
+        :disabled="!valid"
         color="secondary"
         rounded
         @click="uploadPhoto()"
@@ -106,6 +114,8 @@ export default {
     description: "",
     loadingButton: false,
     photo: null,
+    titleRules: [(v)=> !!v || 'Title is required.'],
+    descriptionRules: [(v)=> !!v || 'Description is required.'],
     rules: {
       required: (value) => !!value || "Required.",
     }

@@ -113,15 +113,15 @@ export default {
     valid: true,
     photo_profile: null,
     fullName: "",
-    fullNameRules: [(v) => !!v || 'Full Name is required'],
+    fullNameRules: [(v) => !!v || 'Full Name is required.'],
     email: "",
     emailRules: [
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid.",
       (v) => !!v || 'E-mail is required',
     ],
     passwordShow: false,
     password: "",
-    passwordRules: (v)=> !!v || 'Password is required',
+    passwordRules: [(v)=> !!v || 'Password is required.'],
     match: false,
     rules: {
       required: (value) => !!value || "Required.",

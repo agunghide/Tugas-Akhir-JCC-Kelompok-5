@@ -82,8 +82,8 @@
       >
         <div class="pa-2">
           <v-btn 
-            block c
-            olor="accent" 
+            block 
+            color="accent" 
             dark 
             @click="logout"
           >

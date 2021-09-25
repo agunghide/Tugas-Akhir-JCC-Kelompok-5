@@ -131,7 +131,6 @@ export default {
   },
   created() {
     this.go();
-    console.log(this.guest);
   },
 };
 </script>

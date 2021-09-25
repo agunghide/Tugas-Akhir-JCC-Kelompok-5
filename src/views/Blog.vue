@@ -53,6 +53,7 @@ export default {
   data: () => ({
     blog: {},
     apiDomain: "https://demo-api-vue.sanbercloud.com",
+    endFormWatcher: null
   }),
   computed: {
     ...mapGetters({
@@ -114,15 +115,15 @@ export default {
   },
   created() {
     this.go();
-  },
-  watch:{
-    endForm(value){
-      this.go();
-
+    this.endFormWatcher = this.$watch('endForm', (value) => {
       if(value){
+        this.go();
         this.setEndForm(false)
       }
-    }
+    });
+  },
+  beforeDestroy(){
+    this.endFormWatcher()
   }
 };
 </script>
