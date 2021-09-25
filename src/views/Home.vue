@@ -57,6 +57,8 @@
         :key="`blog-${blog.id}`"
         :blog="blog"
         md="4"
+        titleLength="28"
+        descriptionLength="80"
       >
       </blog-item-component>
     </v-layout>

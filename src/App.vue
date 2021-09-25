@@ -7,7 +7,14 @@
     <alert />
     <Dialog />
 
-    <v-navigation-drawer app right temporary v-model="drawer" :permanent="$vuetify.breakpoint.mdAndUp ? (drawer = false) : false">
+    <!-- Start Navigation Drawer -->
+    <v-navigation-drawer 
+      app 
+      right 
+      temporary 
+      v-model="drawer" 
+      :permanent="$vuetify.breakpoint.mdAndUp ? (drawer = false) : false"
+    >
       <v-list>
         <v-list-item v-if="!guest">
           <v-list-item-avatar 
@@ -27,15 +34,22 @@
             </v-icon>
             
           </v-list-item-avatar>
-          
 
           <v-list-item-content>
             <v-list-item-title>{{ (user.name.length > 22 ) ? `${user.name.substring(0, 22)}...` : user.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
-        <div class="pa-2" v-if="guest">
-          <v-btn block color="secondary" class="mb-1" @click="goPage('/login')">
+        <div 
+          class="pa-2" 
+          v-if="guest"
+        >
+          <v-btn 
+            block 
+            color="secondary" 
+            class="mb-1" 
+            @click="goPage('/login')"
+          >
             <v-icon left>mdi-lock</v-icon>
             Login
           </v-btn>
@@ -62,24 +76,43 @@
         </v-list-item>
       </v-list>
 
-      <template v-slot:append v-if="!guest">
+      <template 
+        v-slot:append 
+        v-if="!guest"
+      >
         <div class="pa-2">
-          <v-btn block color="accent" dark @click="logout">
+          <v-btn 
+            block c
+            olor="accent" 
+            dark 
+            @click="logout"
+          >
             <v-icon>mdi-lock</v-icon>
             Logout
           </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
+    <!-- End Navigation Drawer -->
 
-    <v-app-bar app absolute elevation="0" color="transparent" class="pt-3" v-if="appBar">
+    <!-- Start App Bar -->
+    <v-app-bar 
+      app 
+      absolute 
+      elevation="0" 
+      color="transparent" 
+      class="pt-3" 
+      v-if="appBar"
+    >
         <div class="d-flex container">
             <v-col
               cols="6"
               md="3"
               align-self="center"
             >
-                <h1 class="white--text h2">Team 5</h1>
+                <h1 class="white--text h2">
+                  Team 5
+                </h1>
             </v-col>
             <v-col
               md="6"
@@ -92,10 +125,11 @@
                 background-color="transparent"
               >
                 <v-tab
-                v-for="(item, index) in menus"
-                :key="`menu-${index}`"
-                :to="item.route"
-                class="px-7"
+                  v-for="(item, index) in menus"
+                  :key="`menu-${index}`"
+                  :to="item.route"
+                  class="px-7 no-background-hover"
+                  :ripple="false"
                 >
                   {{ item.title }}
                 </v-tab>
@@ -123,9 +157,10 @@
                   v-slot:activator="{ on, attrs }"
                 >
                   <v-btn
-                    class="py-4 px-4"
-                    color="primary"
+                    class="py-4 px-4 no-background-hover hover-text--secondary"
+                    color="transparent"
                     dark
+                    :ripple="false"
                     elevation="0"
                     v-bind="attrs"
                     v-on="on"
@@ -154,10 +189,18 @@
                     </v-avatar>
                   </v-btn>
                 </template>
-                <v-list class="py-0" color="transparent">
-                  <v-list-item class="dropdown-custom pa-0">
+                <v-list 
+                  class="py-0" 
+                  color="transparent"
+                >
+                  <v-list-item 
+                    class="dropdown-custom pa-0"
+                  >
                   </v-list-item>
-                  <v-list-item selectable @click="logout" class="accent rounded-lg px-6 min-height-custom">
+                  <v-list-item 
+                    selectable 
+                    @click="logout" 
+                    class="accent rounded-lg px-6 min-height-custom">
                     <v-icon>mdi-exit-to-app</v-icon>
                     <v-list-item-title class="caption">Logout</v-list-item-title>
                   </v-list-item>
@@ -175,27 +218,46 @@
                 Login
               </v-btn>
               
-              <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-md-none d-sm-flex float-right"></v-app-bar-nav-icon>
+              <v-app-bar-nav-icon 
+                @click.stop="drawer = !drawer" 
+                class="d-md-none d-sm-flex float-right">
+              </v-app-bar-nav-icon>
             </v-col>
 
 
         </div>
     </v-app-bar>
+    <!-- End App Bar -->
 
-    <!-- Sizes your content based upon application components -->
-    <v-main :class="(route == '/login' || route == '/register') ? 'pa-0' : 'mb-10'">
-      <v-container fluid :class="(route == '/login' || route == '/register') ? 'fill-height pa-0' : 'fill-height'" >
+    <!-- Start Main Content -->
+    <v-main 
+      :class="(route == '/login' || route == '/register') ? 'pa-0' : 'mb-10'"
+    >
+      <v-container 
+        fluid 
+        :class="(route == '/login' || route == '/register') ? 'fill-height pa-0' : 'fill-height'"
+      >
         <v-slide-y-transition>
           <router-view></router-view>
         </v-slide-y-transition>
       </v-container>
     </v-main>
+    <!-- End Main Content -->
 
-    <v-footer app absolute color="transparent" v-if="footerStatus" class="subtitle-2 d-block text-center font-weight-light">
+    <!-- Start Footer -->
+    <v-footer 
+      app 
+      absolute 
+      color="transparent" 
+      v-if="footerStatus" 
+      class="subtitle-2 d-block text-center font-weight-light"
+    >
       Created © 2021 Team 5 VueJS Jabar Coding Camp
       <br>
       All rights reserved
     </v-footer>
+    <!-- End Footer -->
+
   </v-app>
 </template>
 
