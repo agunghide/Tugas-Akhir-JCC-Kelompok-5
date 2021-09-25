@@ -7,7 +7,7 @@ import auth from './auth.js'
 import VuexPersist from 'vuex-persist'
 
 const vuexPersist = new VuexPersist({
-    key: 'sanbercode',
+    key: 'team-5-mantap',
     storage: localStorage
 })
 

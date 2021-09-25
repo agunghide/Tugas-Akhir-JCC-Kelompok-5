@@ -100,12 +100,15 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data: () => ({
+    valid: true,
     apiDomain: "https://demo-api-vue.sanbercloud.com",
     title: "",
     description: "",
     loadingButton: false,
     photo: null,
-    valid : true,
+    rules: {
+      required: (value) => !!value || "Required.",
+    }
 
   }),
   computed: {
@@ -114,6 +117,10 @@ export default {
       params: "dialog/params",
       endForm: "dialog/endForm",
     }),
+
+    validation(){
+      return this.$refs.form.validate()
+    }
   },
   methods:{
     ...mapActions({
@@ -133,47 +140,49 @@ export default {
       this.$emit("closed", false);
     },
     submit(){
-      this.loadingButton = true
+      if(this.validation){
+        this.loadingButton = true
 
-      const config = {
-          method: "post", 
-          url: `${this.apiDomain}/api/v2/blog`,
-          headers: {
-            'Accept' : 'application/json',
-            'Authorization' : `Bearer ${this.token}`
-          },
-          data: {
-            title : this.title,
-            description : this.description
-          },
-      };
+        const config = {
+            method: "post", 
+            url: `${this.apiDomain}/api/v2/blog`,
+            headers: {
+              'Accept' : 'application/json',
+              'Authorization' : `Bearer ${this.token}`
+            },
+            data: {
+              title : this.title,
+              description : this.description
+            },
+        };
 
-      this.axios(config)
-          .then((response) => {
-              let id = response.data.blog.id
-              this.loadingButton = false
+        this.axios(config)
+            .then((response) => {
+                let id = response.data.blog.id
+                this.loadingButton = false
 
-              this.clearForm()
-              this.close()
+                this.clearForm()
+                this.close()
 
-              this.setAlert({
-                status: true,
-                color: "success",
-                text: "Data Berhasil Ditambahkan",
-              });
+                this.setAlert({
+                  status: true,
+                  color: "success",
+                  text: "Data Berhasil Ditambahkan",
+                });
 
-              this.goPage(`/blog/${id}`)
-          })
-          .catch((error)=> {
-              this.loadingButton = false
-              console.log(error)
+                this.goPage(`/blog/${id}`)
+            })
+            .catch((error)=> {
+                this.loadingButton = false
+                console.log(error)
 
-              this.setAlert({
-                status: true,
-                color: "error",
-                text: "Data Gagal Ditambahkan",
-              });
-          })
+                this.setAlert({
+                  status: true,
+                  color: "error",
+                  text: "Data Gagal Ditambahkan",
+                });
+            })
+      }
 
     },
     editBlog(){
@@ -181,90 +190,92 @@ export default {
       this.description = this.params.blog.description
     },
     update(){
-      const id = this.params.blog.id
-      this.loadingButton = true
+      if(this.validation){
+        const id = this.params.blog.id
+        this.loadingButton = true
 
-      const config = {
-          method: "post", 
-          url: `${this.apiDomain}/api/v2/blog/${id}`,
-          params: { _method: 'PUT' },
-          headers: {
-            'Accept' : 'application/json',
-            'Authorization' : `Bearer ${this.token}`
-          },
-          data: {
-            title : this.title,
-            description : this.description
-          },
-          
-      };
+        const config = {
+            method: "post", 
+            url: `${this.apiDomain}/api/v2/blog/${id}`,
+            params: { _method: 'PUT' },
+            headers: {
+              'Accept' : 'application/json',
+              'Authorization' : `Bearer ${this.token}`
+            },
+            data: {
+              title : this.title,
+              description : this.description
+            },
+            
+        };
 
-      this.axios(config)
-          .then(() => {
-              this.loadingButton = true
-              this.clearForm()
-              this.close()
+        this.axios(config)
+            .then(() => {
+                this.loadingButton = true
+                this.clearForm()
+                this.close()
 
-              this.setAlert({
-                status: true,
-                color: "success",
-                text: "Data Berhasil Diupdate",
-              });
+                this.setAlert({
+                  status: true,
+                  color: "success",
+                  text: "Data Berhasil Diupdate",
+                });
 
-          })
-          .catch((error)=> {
-              this.loadingButton = true
-              console.log(error)
+            })
+            .catch((error)=> {
+                this.loadingButton = true
+                console.log(error)
 
-              this.setAlert({
-                status: true,
-                color: "error",
-                text: "Data Gagal Diupdate",
-              });
-          })
-
+                this.setAlert({
+                  status: true,
+                  color: "error",
+                  text: "Data Gagal Diupdate",
+                });
+            })
+      }
     },
     uploadPhoto(){
-      const id = this.params.blog.id
-      this.loadingButton = true
+      if(this.validation){
+        const id = this.params.blog.id
+        this.loadingButton = true
 
-      let formData = new FormData()
-      formData.append('photo', this.photo)
+        let formData = new FormData()
+        formData.append('photo', this.photo)
 
-      const config = {
-          method: "post", 
-          url: `${this.apiDomain}/api/v2/blog/${id}/upload-photo`,
-          headers: {
-            'Authorization' : `Bearer ${this.token}`
-          },
-          data: formData,
-          
-      };
+        const config = {
+            method: "post", 
+            url: `${this.apiDomain}/api/v2/blog/${id}/upload-photo`,
+            headers: {
+              'Authorization' : `Bearer ${this.token}`
+            },
+            data: formData,
+            
+        };
 
-      this.axios(config)
-          .then(() => {
-              this.loadingButton = true
-              this.clearForm()
-              this.close()
+        this.axios(config)
+            .then(() => {
+                this.loadingButton = true
+                this.clearForm()
+                this.close()
 
-              this.setAlert({
-                status: true,
-                color: "success",
-                text: "Foto berhasil diupload ",
-              });
+                this.setAlert({
+                  status: true,
+                  color: "success",
+                  text: "Foto berhasil diupload ",
+                });
 
-          })
-          .catch((error)=> {
-              this.loadingButton = true
-              console.log(error)
+            })
+            .catch((error)=> {
+                this.loadingButton = true
+                console.log(error)
 
-              this.setAlert({
-                status: true,
-                color: "error",
-                text: "Foto gagal diupload",
-              });
-          })
-
+                this.setAlert({
+                  status: true,
+                  color: "error",
+                  text: "Foto gagal diupload",
+                });
+            })
+      }
     },
     goPage(url){
       this.$router.push(url)

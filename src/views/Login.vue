@@ -34,7 +34,6 @@
                     v-model="email"
                     :rules="emailRules"
                     label="E-mail"
-                    required
                     color="secondary"
                   ></v-text-field>
                 </div>
@@ -42,7 +41,7 @@
                   <v-text-field
                     v-model="password"
                     :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required]"
+                    :rules="passwordRules"
                     :type="passwordShow ? 'text' : 'password'"
                     name="input-10-1"
                     label="Password"
@@ -109,9 +108,7 @@ export default {
       passwordShow: false,
       password: '',
       match:false,
-      rules: {
-        required: value => !!value || 'Required.',
-      },
+      passwordRules: [(v) => !!v || 'Password is required'],
       apiDomain: "https://demo-api-vue.sanbercloud.com",
   }),
   computed: {

@@ -147,10 +147,12 @@
               v-if="!guest"
             >
               <v-menu 
-                offset-y 
-                min-width="50px" 
-                nudge-right="68" 
-                nudge-bottom="1"
+                offset-x 
+                min-width="50px"  
+                nudge-left="120"
+                nudge-bottom="36"
+                :content-class="$vuetify.breakpoint.mdAndUp ? undefined : 'd-none'"
+                :value="$vuetify.breakpoint.mdAndUp ? undefined : false"
                 tile
               >
                 <template 
