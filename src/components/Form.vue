@@ -229,7 +229,7 @@ export default {
       this.loadingButton = true
 
       let formData = new FormData()
-      formData.append('photo', this.photo[0])
+      formData.append('photo', this.photo)
 
       const config = {
           method: "post", 
@@ -243,9 +243,6 @@ export default {
 
       this.axios(config)
           .then((response) => {
-              console.log(response)
-              console.log(id)
-              console.log(this.photo)
               this.loadingButton = true
               this.clearForm()
               this.close()
