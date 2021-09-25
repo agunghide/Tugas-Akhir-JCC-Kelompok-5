@@ -242,7 +242,7 @@ export default {
       };
 
       this.axios(config)
-          .then((response) => {
+          .then(() => {
               this.loadingButton = true
               this.clearForm()
               this.close()
