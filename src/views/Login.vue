@@ -7,9 +7,13 @@
     >
           <v-container class="px-md-16 px-10">
             <div class="mb-10 ml-n3 ml-md-8" >
-              <router-link class="d-inline-block pointer subtitle-2 font-weight-regular text-decoration-none" to="/">
-                    <v-icon color="secondary">mdi-chevron-left</v-icon> 
-                    <span class="secondary--text text-decoration-underline">BACK TO HOME</span>
+              <router-link 
+                class="d-inline-block pointer subtitle-2 font-weight-regular text-decoration-none" 
+                to="/"
+                @click="background = ''"
+              >
+                  <v-icon color="secondary">mdi-chevron-left</v-icon> 
+                  <span class="secondary--text text-decoration-underline">BACK TO HOME</span>
               </router-link>
             </div>
             <div class="text-center">
@@ -77,7 +81,7 @@
     <v-col
       cols="12"
       md="6"
-      class="accent d-none d-md-block"
+      :class="`d-none d-md-block ${background}`"
     >
       <v-row class="fill-height">
         <v-col md="12" align-self="center">
@@ -97,6 +101,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data: () => ({
+      background : 'accent',
       loadingButton: false,
       newRegistered: false,
       valid: true,
@@ -173,10 +178,6 @@ export default {
       if(this.$route.params.newRegistered > 0){
         this.newRegistered = this.$route.params.newRegistered
       }
-
-      if(!this.guest){
-        this.redirect();
-      }
-    }
+    },
   }
 </script>

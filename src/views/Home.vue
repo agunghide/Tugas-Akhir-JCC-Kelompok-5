@@ -14,6 +14,8 @@
           Share any experience with us or share something useful with us so that readers get positive insights
         </h2>
         <br>
+        
+        <v-fade-transition hide-on-leave>
         <v-btn 
           v-if="guest"
           color="secondary" 
@@ -23,8 +25,10 @@
         >
           Register for Free
         </v-btn>
+        </v-fade-transition>
+        <v-fade-transition hide-on-leave>
         <v-btn 
-          v-else
+          v-if="!guest"
           color="secondary" 
           rounded 
           class="px-8 py-7"
@@ -32,6 +36,7 @@
         >
           Publish something
         </v-btn>
+        </v-fade-transition>
       </v-col>
       <v-col
         xs="12"

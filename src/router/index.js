@@ -28,12 +28,18 @@ const routes = [
     path: '/login',
     name: 'Login',
     props: true,
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    meta: {
+      guestArea: true
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue'),
+    meta: {
+      guestArea: true
+    }
   },
   { 
     path: '*', 

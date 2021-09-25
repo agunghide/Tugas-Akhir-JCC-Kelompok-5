@@ -196,10 +196,5 @@ export default {
       }
     },
   },
-  mounted() {
-    if (!this.guest) {
-      this.$router.push("/");
-    }
-  },
 };
 </script>

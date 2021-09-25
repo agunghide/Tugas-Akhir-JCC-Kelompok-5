@@ -3,7 +3,7 @@
       sm6 
       xs12 
       5 
-      :class="`px-1 py-2 md md${md}`" 
+      :class="`px-1 py-2 md md${md} `" 
     >
       <v-card 
         hover 

@@ -142,6 +142,8 @@
               class="py-0 d-block px-0"
             >
             
+            
+            <v-scroll-y-transition>
             <div 
               class="text-center d-none d-md-inline-block float-right" 
               v-if="!guest"
@@ -209,6 +211,9 @@
                 </v-list>
               </v-menu>
             </div>
+            </v-scroll-y-transition>
+
+            <v-scroll-y-transition>
               <v-btn 
                 v-if="guest"
                 color="secondary" 
@@ -219,6 +224,7 @@
               >
                 Login
               </v-btn>
+            </v-scroll-y-transition>
               
               <v-app-bar-nav-icon 
                 @click.stop="drawer = !drawer" 
@@ -239,7 +245,7 @@
         fluid 
         :class="(route == '/login' || route == '/register') ? 'fill-height pa-0' : 'fill-height'"
       >
-        <v-slide-y-transition>
+        <v-slide-y-transition hide-on-leave>
           <router-view></router-view>
         </v-slide-y-transition>
       </v-container>
@@ -334,7 +340,6 @@ export default {
     goPage(url){
       this.$router.push(url)
     },
-
     cekRoute(){
       this.route = this.$route.path;
       if(this.route == "/login" || this.route == "/register"){
@@ -356,6 +361,15 @@ export default {
   },
   updated(){
     this.cekRoute()
+  },
+  watch:{
+    $route(to){
+      if (to.matched.some(record => record.meta.guestArea)) {
+        if(!this.guest){
+          this.$router.push('/')
+        }
+      }
+    }
   }
 };
 </script>
