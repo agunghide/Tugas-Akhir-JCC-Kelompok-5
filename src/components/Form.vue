@@ -30,21 +30,34 @@
       <v-divider></v-divider>
     </div>
     <v-card-text>
-            <v-text-field
-              v-model="title"
-              label="Title Blog"
-              color="secondary"
-              light
-              required
-            ></v-text-field>
-            <v-textarea
-              v-model="description"
-              clearable
-              color="secondary"
-              clear-icon="mdi-close-circle"
-              label="Blog Description"
-              light
-            ></v-textarea>
+      <v-form v-model="valid">
+        <v-text-field
+          v-model="title"
+          label="Title Blog"
+          color="secondary"
+          light
+          required
+          v-if="params.typeForm !== 'upload'"
+        ></v-text-field>
+        <v-textarea
+          v-model="description"
+          clearable
+          color="secondary"
+          clear-icon="mdi-close-circle"
+          label="Blog Description"
+          light
+          required
+          v-if="params.typeForm !== 'upload'"
+        ></v-textarea>
+        <v-file-input
+          v-model="photo"
+          show-size
+          counter
+          label="Upload Photo Blog"
+          color="secondary"
+          v-if="params.typeForm == 'upload'"
+        ></v-file-input>
+      </v-form>
     </v-card-text>
     <v-card-actions>
       <v-btn
@@ -67,6 +80,17 @@
       >
         Update
       </v-btn>
+      <v-btn
+        v-else-if="params.typeForm == 'upload'"
+        color="secondary"
+        rounded
+        @click="uploadPhoto()"
+        class="px-10 py-6"
+        :loading="loadingButton"
+      >
+        Upload
+      </v-btn>
+
     </v-card-actions>
   </v-card>
 </template>
@@ -79,7 +103,10 @@ export default {
     apiDomain: "https://demo-api-vue.sanbercloud.com",
     title: "",
     description: "",
-    loadingButton: false
+    loadingButton: false,
+    photo: null,
+    valid : true,
+
   }),
   computed: {
     ...mapGetters({
@@ -99,6 +126,7 @@ export default {
       this.setEndForm(true)
       this.title = ''
       this.description = ''
+      this.photo = null
     },
 
     close() {
@@ -183,7 +211,6 @@ export default {
                 text: "Data Berhasil Diupdate",
               });
 
-              // this.$router.go(0)
           })
           .catch((error)=> {
               this.loadingButton = true
@@ -193,6 +220,51 @@ export default {
                 status: true,
                 color: "error",
                 text: "Data Gagal Diupdate",
+              });
+          })
+
+    },
+    uploadPhoto(){
+      const id = this.params.blog.id
+      this.loadingButton = true
+
+      let formData = new FormData()
+      formData.append('photo', this.photo[0])
+
+      const config = {
+          method: "post", 
+          url: `${this.apiDomain}/api/v2/blog/${id}/upload-photo`,
+          headers: {
+            'Authorization' : `Bearer ${this.token}`
+          },
+          data: formData,
+          
+      };
+
+      this.axios(config)
+          .then((response) => {
+              console.log(response)
+              console.log(id)
+              console.log(this.photo)
+              this.loadingButton = true
+              this.clearForm()
+              this.close()
+
+              this.setAlert({
+                status: true,
+                color: "success",
+                text: "Foto berhasil diupload ",
+              });
+
+          })
+          .catch((error)=> {
+              this.loadingButton = true
+              console.log(error)
+
+              this.setAlert({
+                status: true,
+                color: "error",
+                text: "Foto gagal diupload",
               });
           })
 
