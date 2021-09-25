@@ -297,6 +297,7 @@ export default {
       guest: "auth/guest",
       user: "auth/user",
       token: "auth/token",
+      titleBlog: "blog/title",
     }),
   },
 
@@ -341,8 +342,8 @@ export default {
       this.$router.push(url)
     },
     cekRoute(){
-      this.route = this.$route.path;
-      if(this.route == "/login" || this.route == "/register"){
+      this.route = this.$route;
+      if(this.route.path == "/login" || this.route.path == "/register"){
         this.$vuetify.theme.dark = false;
         this.appBar = false
         this.footerStatus = false
@@ -364,11 +365,18 @@ export default {
   },
   watch:{
     $route(to){
+      if(this.$route.name != "Blog"){
+        document.title = this.$route.name
+      }
+
       if (to.matched.some(record => record.meta.guestArea)) {
         if(!this.guest){
           this.$router.push('/')
         }
       }
+    },
+    titleBlog(value) {
+        document.title = value;
     }
   }
 };

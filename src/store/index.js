@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import alert from './alert.js'
 import dialog from './dialog.js'
 import auth from './auth.js'
+import blog from './blog.js'
 
 import VuexPersist from 'vuex-persist'
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
         alert,
         dialog,
         auth,
+        blog,
     }
   })

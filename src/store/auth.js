@@ -17,7 +17,9 @@ export default {
     actions: {
         setToken: ({commit, dispatch}, payload) => {
             commit('setToken', payload)
-            dispatch('checkToken', payload)
+            if(payload){
+                dispatch('checkToken', payload)
+            }
         },
 
         checkToken: ({commit}, payload) => {

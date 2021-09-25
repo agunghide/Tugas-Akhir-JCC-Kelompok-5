@@ -72,15 +72,19 @@ export default {
         .then((response) => {
           let { blog } = response.data;
           this.blog = blog;
+          this.setTitleBlog(this.blog.title);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    
     ...mapActions({
       setDialogComponent: "dialog/setComponent",
       setEndForm: "dialog/setEndForm",
+      setTitleBlog: "blog/setTitle",
     }),
+
     updateForm() {
       this.setDialogComponent({
         component: "Form",
