@@ -128,7 +128,7 @@
                   v-for="(item, index) in menus"
                   :key="`menu-${index}`"
                   :to="item.route"
-                  class="px-7 no-background-hover"
+                  class="px-7 no-background-hover hover-text--secondary"
                   :ripple="false"
                 >
                   {{ item.title }}

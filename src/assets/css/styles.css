@@ -32,12 +32,14 @@
 }
 
 .hover-text--secondary:hover,
+.hover-text--secondary:focus {
+  color: var(--v-secondary-base) !important;
+}
+
 .hover-text--secondary:hover .v-avatar.outlined--secondary,
-.hover-text--secondary:focus,
 .hover-text--secondary:focus .v-avatar.outlined--secondary {
   color: var(--v-secondary-base) !important;
   border: 2px solid !important;
-  margin-right: -1px;
 }
 
 .dropdown-custom {
