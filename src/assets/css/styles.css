@@ -2,6 +2,10 @@
   border: 1px solid;
   border-color: var(--v-secondary-base);
 }
+.v-avatar.outlined--white {
+  border: 4px solid;
+  border-color: var(--v-white-base);
+}
 
 .v-avatar.outlined--secondary img,
 .v-avatar.outlined--secondary .v-icon {
