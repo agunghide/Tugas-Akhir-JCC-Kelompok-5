@@ -25,19 +25,19 @@
       </div>
       <div class="d-flex flex-row">
         <div>
-          <v-btn :disabled="guest" @click="openForm()" rounded color="secondary">
+          <v-btn :disabled="guest" @click="updateForm()" rounded color="secondary">
             <v-icon size="18" class="pr-2">mdi-pencil-box-outline</v-icon>  
             Update
           </v-btn>
         </div>
         <div class="px-5">
-          <v-btn :disabled="guest" rounded color="secondary">
+          <v-btn :disabled="guest" @click="uploadPhoto()" rounded color="secondary">
             <v-icon size="18" class="pr-2">mdi-tray-arrow-up</v-icon>  
             Upload File
           </v-btn>
         </div>
         <div>
-          <v-btn :disabled="guest" rounded color="accent">
+          <v-btn :disabled="guest" @click="removeBlog()" rounded color="accent">
             <v-icon size="18" class="pr-2">mdi-trash-can-outline</v-icon>  
             Delete
           </v-btn>
@@ -80,7 +80,7 @@ export default {
       setDialogComponent: "dialog/setComponent",
       setEndForm: "dialog/setEndForm",
     }),
-    openForm() {
+    updateForm() {
       this.setDialogComponent({
         component: "Form",
         params:{
@@ -91,6 +91,26 @@ export default {
         }
       });
     },
+    uploadPhoto() {
+      this.setDialogComponent({
+        component: "Form",
+        params:{
+          titleDialog: "Upload Photo",
+          descriptionDialog:"Share any experience with us so that readers get positive insights",
+          typeForm: "upload",
+          blog : this.blog
+        }
+      });
+    },
+
+    removeBlog(){
+      this.setDialogComponent({
+        component : 'Delete',
+        params : {
+          blog : this.blog,
+        }
+      })
+    }
   },
   created() {
     this.go();

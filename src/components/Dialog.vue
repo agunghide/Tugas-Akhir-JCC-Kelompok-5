@@ -3,7 +3,7 @@
     <keep-alive>
       <v-dialog
         v-model="dialog"
-        max-width="600px"
+        max-width="450px"
       >
         <component :is="currentComponent" @closed="setDialogStatus"></component>
       </v-dialog>
@@ -17,6 +17,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     Form: () => import("./Form.vue"),
+    Delete: () => import("./Delete.vue"),
   },
   computed: {
     ...mapGetters({
