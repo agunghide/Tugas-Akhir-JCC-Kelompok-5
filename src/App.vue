@@ -239,11 +239,11 @@
 
     <!-- Start Main Content -->
     <v-main 
-      :class="(route == '/login' || route == '/register') ? 'pa-0' : 'mb-10'"
+      :class="(route.path == '/login' || route.path == '/register') ? 'pa-0' : 'mb-10'"
     >
       <v-container 
         fluid 
-        :class="(route == '/login' || route == '/register') ? 'fill-height pa-0' : 'fill-height'"
+        :class="(route.path == '/login' || route.path == '/register') ? 'fill-height pa-0' : 'fill-height'"
       >
         <v-slide-y-transition hide-on-leave>
           <router-view></router-view>

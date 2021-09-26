@@ -121,7 +121,7 @@ export default {
     ],
     passwordShow: false,
     password: "",
-    passwordRules: [(v)=> !!v || 'Password is required.'],
+    passwordRules: (v)=> !!v || 'Password is required.',
     match: false,
     rules: {
       required: (value) => !!value || "Required.",
