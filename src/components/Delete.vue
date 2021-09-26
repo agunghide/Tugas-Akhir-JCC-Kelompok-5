@@ -104,9 +104,6 @@ export default {
     if (this.token) {
       this.checkToken(this.token);
     }
-    if (this.params.typeForm == "update") {
-      this.editBlog()
-    }
   },
 }
 </script>
