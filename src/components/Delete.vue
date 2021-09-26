@@ -74,7 +74,7 @@ export default {
 
       this.axios(config)
           .then(() => {
-              this.loadingButton = true
+              this.loadingButton = false
               this.close()
               this.setAlert({
                 status: true,
@@ -85,7 +85,7 @@ export default {
                this.goPage('/blogs')
           })
           .catch((error)=> {
-              this.loadingButton = true
+              this.loadingButton = false
               console.log(error)
 
               this.setAlert({
