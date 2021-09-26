@@ -140,7 +140,6 @@ export default {
     }),
 
     clearForm(){
-      this.setEndForm(true)
       this.title = ''
       this.description = ''
       this.photo = null
@@ -230,6 +229,8 @@ export default {
                   color: "success",
                   text: "Data Berhasil Diupdate",
                 });
+                
+                this.setEndForm(true)
 
             })
             .catch((error)=> {
@@ -273,6 +274,8 @@ export default {
                   color: "success",
                   text: "Foto berhasil diupload ",
                 });
+                
+               this.setEndForm(true)
 
             })
             .catch((error)=> {
