@@ -1,13 +1,14 @@
 # Tugas Akhir Jabar Coding Camp VueJS (Kelompok 5)
 
-⋅⋅* Agung Hidayat
-⋅⋅* Ilham Maulana
-⋅⋅\* Sayyid Ahsan Darojat
+  * Agung Hidayat
+  * Ilham Maulana
+  * Sayyid Ahsan Darojat
 
 ## Built With
 
-<img src="https://vuejs.org/images/logo.svg" width="48"> Vue
-<img src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light.svg" width="48"> Vuetify
+<img src="https://vuejs.org/images/logo.svg" width="12">   Vue
+
+<img src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light.svg" width="12">   Vuetify
 
 ## Project setup
 
